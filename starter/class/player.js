@@ -36,24 +36,50 @@ class Player extends Character {
   takeItem(itemName) {
 
     // Fill this in
+    const pickedUpItem = this.currentRoom.getItemByName(itemName)
+    if (pickedUpItem) {
+        this.items.push(pickedUpItem)
+        const itemIndex = this.currentRoom.items.indexOf(pickedUpItem)
+        this.currentRoom.items.splice(itemIndex, 1)
+    } else {
+      console.log(`${itemName} not found in room`)
+    }
 
   }
 
   dropItem(itemName) {
 
     // Fill this in
+    const droppedItem = this.getItemByName(itemName)
+    if (droppedItem) {
+        this.currentRoom.items.push(droppedItem)
+        const itemIndex = this.items.indexOf(droppedItem)
+        this.items.splice(itemIndex, 1)
+    } else {
+    console.log(`${itemName} not found in inventory`)
+    }
 
   }
 
   eatItem(itemName) {
 
     // Fill this in
+    const itemToEat = this.getItemByName(itemName);
+    if (itemToEat && itemToEat instanceof Food) {
+        const itemIndex = this.items.indexOf(itemToEat);
+        this.items.splice(itemIndex, 1);
+    }
+    else console.log(`You can't eat ${itemName}`);
 
   }
 
   getItemByName(name) {
 
     // Fill this in
+    for (let i = 0; i < this.items.length; i++) {
+      const item = this.items[i];
+      if (item.name === name) return item;
+    }
 
   }
 
